@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+
+<html>
+    <head>
+        <script>
+            var colors = ["black", "white", "blue", "yellow"];
+            
+            function changeColor(element, color) {
+                element.style.backgroundColor = color;
+            }
+            function printColors(){
+                var p = document.getElementById('colorsParagraph');
+                
+                for (i=0; i < colors.length; i++)
+                    p.innerHTML += colors[0] + ", ";
+            }
+
+        </script>
+
+    </head>
+    <body> onload="printColors()">
+        <h1>Website colors:</h1>
+        <p id="colorsParagraph"></p>
+        
+        <button onMouseOver="changeColor(this, colors[2])" onMouseOut="changeColor(this, colors[3])">Hello master</button>
+        <br>
+        <button onMouseOver="changeColor(this, colors[2])" onMouseOut="changeColor(this, colors[3])">Hello master</button>
+        <br>
+        <button onMouseOver="changeColor(this, colors[2])" onMouseOut="changeColor(this, colors[3])">Hello master</button>
+
+    </body>
+</html>

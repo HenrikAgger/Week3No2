@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!--<title>Start Page</title> -->
+        <!--<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> -->
+        <script>
+            function changeText(txt) {
+                document.getElementById('button1').innerHTML = txt;
+            }
+            function changeColor(element, color) {
+                element.style.backgroundColor = color;
+            }
+
+            function validate() {
+                document.getElementById('status').innerHTML = "Input OK!";
+            }
+
+            function copy(element) {
+                document.getElementById('copy').innerHTML = element.value;
+            }
+            
+        </script>
+
+    </head>
+    <body onload="changeText('En lille fin knap')">
+
+        <button id="button1" onMouseOver = "changeColor(this, 'green)"
+                onMouseOut = "changeColor(this, 'white')"></button>
+        <input type="text" onChange="validate()" onkeyup="copy(this)" />
+        <p id="status"></p>
+        <p id="copy"></p>
+    </body>
+</html>
