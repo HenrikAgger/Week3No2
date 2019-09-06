@@ -1,5 +1,7 @@
 package moviefacade;
 
+import entities.Movie;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -10,68 +12,71 @@ import javax.persistence.TypedQuery;
  * Rename Class to a relevant name Add add relevant facade methods
  */
 public class MovieFacade {
-    
+
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
-    public MovieFacade(){}
-    
-    public Movie findByID(long id){
+
+    public MovieFacade() {
+    }
+
+    public Movie findByID(long id) {
         EntityManager em = emf.createEntityManager();
         try {
-            TypedQuery<Movie> query = 
-                    em.createQuery("Select m from Movie m where m.id =:id",Movie.class);
+            TypedQuery<Movie> query
+                    = em.createQuery("Select m from Movie m where m.id =:id", Movie.class);
             query.setParameter("id", id);
             return query.getSingleResult();
-        }finally{
+        } finally {
             em.close();
         }
     }
-    
-    public List<Movie> findByTitle(String title){
+
+    public List<Movie> findByTitle(String title) {
         EntityManager em = emf.createEntityManager();
-            try {
-                TypedQuery<Movie> query
-            }
+        try {
+            TypedQuery<Movie> query
+                    = em.createQuery("Select m from Movie m where m.title = :title", Movie.class);
+            query.setParameter("title", title);
+            return query.getResultList();
+        } finally {
+            em.close();
+
+        }
     }
-    
-    
-    
-    
-    
-//
-//    private static MovieFacade instance;
-//    private static EntityManagerFactory emf;
-//    
-//    //Private Constructor to ensure Singleton
-//    private MovieFacade() {}
-//    
-//    
-//    /**
-//     * 
-//     * @param _emf
-//     * @return an instance of this facade class.
-//     */
-//    public static MovieFacade getFacadeExample(EntityManagerFactory _emf) {
-//        if (instance == null) {
-//            emf = _emf;
-//            instance = new MovieFacade();
-//        }
-//        return instance;
+
+    public List<Movie> findByPrice(String price) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery<Movie> query
+                    = em.createQuery("Select m from Movie m where m.price = :price", Movie.class);
+            query.setParameter("price", price);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+//    public int getNumberOfMovies() {
+//        List<Movies> mv;
+//        mv = allMovies();
+//        return mv.size();
 //    }
-//
-//    private EntityManager getEntityManager() {
-//        return emf.createEntityManager();
-//    }
-//    
-//    //TODO Remove/Change this before use
-//    public long getRenameMeCount(){
-//        EntityManager em = emf.createEntityManager();
-//        try{
-//            long renameMeCount = (long)em.createQuery("SELECT COUNT(r) FROM RenameMe r").getSingleResult();
-//            return renameMeCount;
-//        }finally{  
-//            em.close();
-//        }
-//        
-//    }
+
+    public Movie addMovie(Movie movie) {
+        try {
+            EntityManager em = emf.createEntityManager();
+            em.getTransaction().begin();
+            em.persist(movie);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return movie;
+    }
+
+    public void placeMovie(){
+        addMovie(new Movie("Avengers", 99));
+        addMovie(new Movie("Jurrasic World", 49));
+        addMovie(new Movie("Equalizer 2", 69));
+    }
 
 }
